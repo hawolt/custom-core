@@ -13,7 +13,7 @@
         <module>logger</module>
         <module>runtime</module>
         <module>sql</module>
-        <module>cli</module>
+        <module>boot</module>
     </modules>
 
     <properties>
