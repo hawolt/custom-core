@@ -166,6 +166,8 @@ public class Logger {
             replacement = replacement.replace("$METHOD", getCallingMethodName(stackTrace));
         if (replacement.contains("$CLASS"))
             replacement = replacement.replace("$CLASS", getCallingClassName(stackTrace));
+        if (replacement.contains("$SHORT"))
+            replacement = replacement.replace("$SHORT", getCallingOriginShort(stackTrace));
         if (replacement.contains("$ORIGIN")) replacement = replacement.replace("$ORIGIN", getCallingOrigin(stackTrace));
         return replacement;
     }
@@ -184,6 +186,11 @@ public class Logger {
         return String.join("::", element.getClassName(), element.getMethodName());
     }
 
+    private static String getCallingOriginShort(StackTraceElement[] stackTrace) {
+        StackTraceElement element = getFirstPlausible(stackTrace);
+        String[] packages = element.getClassName().split("\\.");
+        return String.join("::", packages[packages.length - 1], element.getMethodName());
+    }
 
     private static String getCallingClassName(StackTraceElement[] stackTrace) {
         StackTraceElement element = getFirstPlausible(stackTrace);
