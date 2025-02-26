@@ -11,9 +11,10 @@
 
     <modules>
         <module>logger</module>
-        <module>runtime</module>
         <module>sql</module>
         <module>boot</module>
+        <module>config</module>
+        <module>runtime</module>
     </modules>
 
     <properties>
@@ -21,5 +22,4 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
 </project>
