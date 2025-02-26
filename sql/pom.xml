@@ -25,7 +25,7 @@
         </dependency>
         <dependency>
             <groupId>com.hawolt</groupId>
-            <artifactId>runtime</artifactId>
+            <artifactId>config</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>

@@ -6,6 +6,11 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.function.Function;
 
+/**
+ * Created: 21/04/2022 09:46
+ * Author: Twitter @hawolt
+ **/
+
 public class ResultSetTransformer {
 
     public static <T> T singleton(ResultSet set, Function<Object[], T> function) throws SQLException {
