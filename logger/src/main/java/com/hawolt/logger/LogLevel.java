@@ -1,7 +1,7 @@
 package com.hawolt.logger;
 
 public enum LogLevel {
-    ALL, INTERNAL, DEBUG, INFO, WARN, ERROR, FATAL;
+    ALL, INTERNAL, TRACE, DEBUG, INFO, WARN, ERROR, FATAL;
 
     private static final LogLevel[] LEVELS = LogLevel.values();
 

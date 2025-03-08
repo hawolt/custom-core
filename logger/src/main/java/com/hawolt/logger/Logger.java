@@ -273,6 +273,10 @@ public class Logger {
         log(LogLevel.DEBUG, true, format, objects);
     }
 
+    public static void trace(String format, Object... objects) {
+        log(LogLevel.TRACE, true, format, objects);
+    }
+
     public static void fatal(Object object) {
         log(LogLevel.FATAL, true, "{}", object);
     }
@@ -291,5 +295,9 @@ public class Logger {
 
     public static void debug(Object object) {
         log(LogLevel.DEBUG, true, "{}", object);
+    }
+
+    public static void trace(Object object) {
+        log(LogLevel.TRACE, true, "{}", object);
     }
 }
