@@ -29,7 +29,7 @@ public class SLF4JProvider implements SLF4JServiceProvider {
 
     @Override
     public String getRequestedApiVersion() {
-        return "2.0.17";
+        return "2.0.16";
     }
 
     @Override
