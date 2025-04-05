@@ -18,7 +18,6 @@
         <module>h2</module>
         <module>slf4j-logger</module>
         <module>netherscript</module>
-        <module>twitch-auth</module>
         <module>env</module>
     </modules>
 
