@@ -1,4 +1,4 @@
-package com.hawolt.cli;
+package com.hawolt.boot;
 
 import java.util.ArrayList;
 import java.util.HashMap;

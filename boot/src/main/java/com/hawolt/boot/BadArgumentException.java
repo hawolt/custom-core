@@ -1,4 +1,4 @@
-package com.hawolt.cli;
+package com.hawolt.boot;
 
 public class BadArgumentException extends RuntimeException {
     public BadArgumentException(String reason) {
