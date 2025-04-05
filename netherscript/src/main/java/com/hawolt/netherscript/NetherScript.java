@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-public class NetherScript<T extends NetherSource> {
+public class NetherScript<T> {
 
     private static final String INTERNAL_WRAP = "<<!~INTERNAL~!>>";
 
