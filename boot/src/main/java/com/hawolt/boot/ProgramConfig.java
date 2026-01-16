@@ -27,10 +27,15 @@ public class ProgramConfig {
 
     public void link(String min, String full) {
         this.link.put(min, full);
-        if (parameters.containsKey(min)) {
-            this.parameters.put(full, parameters.get(min));
-        } else {
-            this.parameters.put(min, parameters.get(full));
+        this.link.put(full, full);
+
+        Object minValue = parameters.get(min);
+        Object fullValue = parameters.get(full);
+        Object actual = minValue != null ? minValue : fullValue;
+
+        if (actual != null) {
+            parameters.put(full, actual);
+            parameters.remove(min);
         }
     }
 
