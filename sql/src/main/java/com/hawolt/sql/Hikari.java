@@ -46,9 +46,6 @@ public class Hikari {
         config.setPassword(source.get("sql.password"));
         int size = source.containsKey("sql.max") ? Integer.parseInt(source.get("sql.max")) : Runtime.getRuntime().availableProcessors();
         if (source.containsKey("sql.max")) config.setMaximumPoolSize(size);
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
         Hikari hikari = new Hikari(new HikariDataSource(config));
         CONNECTION_MANAGERS.put(name, hikari);
         return hikari;
