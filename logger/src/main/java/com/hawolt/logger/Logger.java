@@ -20,6 +20,17 @@ import java.util.concurrent.TimeUnit;
 
 public class Logger {
     private final static Object SYNCHRONIZED_LOCK = new Object();
+
+    private static final ExecutorService LOG_EXECUTOR = Executors.newSingleThreadExecutor(runnable -> {
+        Thread thread = new Thread(runnable, "logger-thread");
+        thread.setDaemon(true); // won't block JVM shutdown
+        return thread;
+    });
+
+    private static final String[] INTERNAL_PACKAGES = {
+            "com.hawolt.logger.Logger",
+            "com.hawolt.sl4fj.logger.SLF4JLogger"
+    };
     private static SimpleDateFormat LOG_DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.US);
     private static SimpleDateFormat LOG_FILE_FORMAT = new SimpleDateFormat("dd-MMM-yyyy_HH-mm-ss", Locale.US);
     private static LogLevel MIN_LOG_LEVEL = LogLevel.ALL;
@@ -104,7 +115,6 @@ public class Logger {
                         default:
                             log(LogLevel.ALL, true, "DEFAULT {}:{}", setting.name(), config[1]);
                             break;
-
                     }
                 }
             }
@@ -172,11 +182,17 @@ public class Logger {
         return replacement;
     }
 
+    private static boolean isInternalFrame(StackTraceElement element) {
+        String className = element.getClassName();
+        for (String prefix : INTERNAL_PACKAGES) {
+            if (className.startsWith(prefix)) return true;
+        }
+        return false;
+    }
+
     private static StackTraceElement getFirstPlausible(StackTraceElement[] elements) {
         for (int i = 1; i < elements.length; i++) {
-            StackTraceElement element = elements[i];
-            if (element.getClassName().startsWith("com.hawolt.logger.Logger")) continue;
-            return element;
+            if (!isInternalFrame(elements[i])) return elements[i];
         }
         return elements[elements.length - 1];
     }
@@ -225,8 +241,7 @@ public class Logger {
     }
 
     private static void write(LogLevel level, final String line, boolean linebreak) {
-        ExecutorService service = Executors.newSingleThreadExecutor();
-        Runnable runnable = () -> {
+        LOG_EXECUTOR.execute(() -> {
             String lineToWrite = line;
             if (Logger.encryption != null) {
                 lineToWrite = Logger.encryption.onBeforeWrite(line);
@@ -235,9 +250,7 @@ public class Logger {
                 if (LOG_TO_FILE) writeToFile(lineToWrite, linebreak);
                 if (LOG_TO_CONSOLE) writeToOutputStream(level, lineToWrite, linebreak);
             }
-        };
-        service.execute(runnable);
-        service.shutdown();
+        });
     }
 
     public static void log(LogLevel level, boolean linebreak, String format, Object... objects) {
@@ -251,6 +264,30 @@ public class Logger {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         throwable.printStackTrace(new PrintStream(out));
         log(LogLevel.ERROR, false, "{}", out.toString());
+    }
+
+    public static void trace(Throwable throwable) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        throwable.printStackTrace(new PrintStream(out));
+        log(LogLevel.TRACE, false, "{}", out.toString());
+    }
+
+    public static void debug(Throwable throwable) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        throwable.printStackTrace(new PrintStream(out));
+        log(LogLevel.DEBUG, false, "{}", out.toString());
+    }
+
+    public static void info(Throwable throwable) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        throwable.printStackTrace(new PrintStream(out));
+        log(LogLevel.INFO, false, "{}", out.toString());
+    }
+
+    public static void warn(Throwable throwable) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        throwable.printStackTrace(new PrintStream(out));
+        log(LogLevel.WARN, false, "{}", out.toString());
     }
 
     public static void fatal(String format, Object... objects) {
