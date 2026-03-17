@@ -4,9 +4,16 @@ import org.slf4j.Logger;
 import org.slf4j.Marker;
 
 public class SLF4JLogger implements Logger {
+
+    private final String name;
+
+    public SLF4JLogger(String name) {
+        this.name = name;
+    }
+
     @Override
     public String getName() {
-        return com.hawolt.logger.Logger.class.getName();
+        return name;
     }
 
     @Override
@@ -36,7 +43,8 @@ public class SLF4JLogger implements Logger {
 
     @Override
     public void trace(String s, Throwable throwable) {
-        com.hawolt.logger.Logger.trace(s, throwable);
+        com.hawolt.logger.Logger.trace(s);
+        com.hawolt.logger.Logger.trace(throwable);
     }
 
     @Override
@@ -96,7 +104,8 @@ public class SLF4JLogger implements Logger {
 
     @Override
     public void debug(String s, Throwable throwable) {
-        com.hawolt.logger.Logger.debug(s, throwable);
+        com.hawolt.logger.Logger.debug(s);
+        com.hawolt.logger.Logger.debug(throwable);
     }
 
     @Override
@@ -136,7 +145,7 @@ public class SLF4JLogger implements Logger {
 
     @Override
     public void info(String s) {
-        com.hawolt.logger.Logger.info(s, new Object[0]);
+        com.hawolt.logger.Logger.info(s);
     }
 
     @Override
@@ -156,7 +165,8 @@ public class SLF4JLogger implements Logger {
 
     @Override
     public void info(String s, Throwable throwable) {
-        com.hawolt.logger.Logger.info(s, throwable);
+        com.hawolt.logger.Logger.info(s);
+        com.hawolt.logger.Logger.info(throwable);
     }
 
     @Override
@@ -196,7 +206,7 @@ public class SLF4JLogger implements Logger {
 
     @Override
     public void warn(String s) {
-        com.hawolt.logger.Logger.warn(s, new Object[0]);
+        com.hawolt.logger.Logger.warn(s);
     }
 
     @Override
@@ -216,7 +226,8 @@ public class SLF4JLogger implements Logger {
 
     @Override
     public void warn(String s, Throwable throwable) {
-        com.hawolt.logger.Logger.warn(s, throwable);
+        com.hawolt.logger.Logger.warn(s);
+        com.hawolt.logger.Logger.warn(throwable);
     }
 
     @Override
@@ -256,7 +267,7 @@ public class SLF4JLogger implements Logger {
 
     @Override
     public void error(String s) {
-        com.hawolt.logger.Logger.error(s, new Object[0]);
+        com.hawolt.logger.Logger.error(s);
     }
 
     @Override
@@ -276,7 +287,8 @@ public class SLF4JLogger implements Logger {
 
     @Override
     public void error(String s, Throwable throwable) {
-        com.hawolt.logger.Logger.error(s, throwable);
+        com.hawolt.logger.Logger.error(s);
+        com.hawolt.logger.Logger.error(throwable);
     }
 
     @Override
