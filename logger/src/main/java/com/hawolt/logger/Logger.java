@@ -153,7 +153,8 @@ public class Logger {
         do {
             indexOf = builder.indexOf("{}", indexOf + 1);
             if (indexOf >= 0) {
-                String replacement = getPlausibleCalling(values[count++].toString());
+                Object value = values[count++];
+                String replacement = getPlausibleCalling(value == null ? "null" : value.toString());
                 builder.replace(indexOf, indexOf + 2, replacement);
                 indexOf += replacement.length() - 1;
             }
